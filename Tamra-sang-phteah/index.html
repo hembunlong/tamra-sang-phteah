@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>តម្រាសង់ផ្ទះ & ពេលវេលាល្អ - ការគណនាតាមបែបខ្មែរបុរាណ</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>តម្រាសង់ផ្ទះ</h1>
+            <p class="subtitle">ការគណនាខ្នាត​ និង ពេលវេលាល្អ សម្រាប់សាងសង់តាមបែបបុរាណខ្មែរ</p>
+        </header>
+
+        <main>
+            <!-- Navigation -->
+            <div class="navigation">
+                <button class="nav-btn active" onclick="showSection('house-calc')" data-section="house-calc">
+                    <span>គណនាខ្នាត</span>
+                </button>
+                <button class="nav-btn" onclick="showSection('good-time')" data-section="good-time">
+                    <span>ពេលវេលាល្អ</span>
+                </button>
+            </div>
+
+            <!-- House Calculation Section -->
+            <div id="house-calc" class="section active">
+                <div class="input-section">
+                    <h2>បញ្ចូលទិន្នន័យ</h2>
+                    <div class="input-group">
+                        <label for="measurement">ប្រវែងគិតជាសង់ទីម៉ែត្រ (CM):</label>
+                        <input type="number" id="measurement" step="0.01" placeholder="បញ្ចូលតម្លៃ" />
+                        <button onclick="calculate()">គណនា</button>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <h2>លទ្ធផល</h2>
+                    <div class="result-display">
+                        <div class="result-item">
+                            <span class="label">លេខ:</span>
+                            <span id="resultNumber" class="value">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">ចម្លើយ:</span>
+                            <span id="resultAnswer" class="value">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lookup-table">
+                    <h2>តារាងលិទ្ធិផល</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>លេខ</th>
+                                <th>ចម្លើយ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-number="1">
+                                <td>1</td>
+                                <td>មានទ្រព្យ</td>
+                            </tr>
+                            <tr data-number="2">
+                                <td>2</td>
+                                <td>អន្តរាយ</td>
+                            </tr>
+                            <tr data-number="3">
+                                <td>3</td>
+                                <td>ចោរលួច</td>
+                            </tr>
+                            <tr data-number="4">
+                                <td>4</td>
+                                <td>មានជំងឺ</td>
+                            </tr>
+                            <tr data-number="5">
+                                <td>5</td>
+                                <td>មានមិត្តភក្កិ</td>
+                            </tr>
+                            <tr data-number="6">
+                                <td>6</td>
+                                <td>ព្រាត់ប្រាស់</td>
+                            </tr>
+                            <tr data-number="7">
+                                <td>7</td>
+                                <td>មានជំងឺ</td>
+                            </tr>
+                            <tr data-number="8">
+                                <td>8</td>
+                                <td>មានលាភ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="formula-info">
+                    <h3>រូបមន្តគណនា</h3>
+                    <div class="formula">
+                        <code>លទ្ធផល = MOD(INT(ប្រវែងគិតជាសង់ទីម៉ែត្រ/5.375), 8) + 1</code>
+                    </div>
+                    <p class="formula-explanation">
+                        រូបមន្តនេះនឹងយកប្រវែងគិតជាសង់ទីម៉ែត្រដែលបញ្ចូល ចែកនឹង 5.375 រួចយកចំនួនគត់ បន្ទាប់មកយកសំណល់នៃការចែកនឹង 8 ហើយបូកបន្ថែម 1
+                    </p>
+                </div>
+            </div>
+
+            <!-- Good Time Section -->
+            <div id="good-time" class="section">
+                <div class="filter-section">
+                    <h2>ស្វែងរកតាមលក្ខខណ្ឌ</h2>
+                    <div class="filter-controls">
+                        <div class="filter-group">
+                            <label for="monthFilter">ស្វែងរកតាមខែ:</label>
+                            <select id="monthFilter" onchange="filterResults()">
+                                <option value="">ជ្រើសរើសខែ</option>
+                                <option value="មិគសិរ">មិគសិរ</option>
+                                <option value="ផល្គុន">ផល្គុន</option>
+                                <option value="ពិសាខ">ពិសាខ</option>
+                                <option value="ស្រាពណ៍">ស្រាពណ៍</option>
+                                <option value="កត្តិក">កត្តិក</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="dayFilter">ស្វែងរកតាមថ្ងៃ:</label>
+                            <select id="dayFilter" onchange="filterResults()">
+                                <option value="">ជ្រើសរើសថ្ងៃ</option>
+                                <option value="ថ្ងៃច័ន្ទ">ថ្ងៃច័ន្ទ</option>
+                                <option value="ថ្ងៃពុធ">ថ្ងៃពុធ</option>
+                                <option value="ថ្ងៃព្រហស្បត្តិ៍">ថ្ងៃព្រហស្បត្តិ៍</option>
+                                <option value="ថ្ងៃសុក្រ">ថ្ងៃសុក្រ</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="lunarFilter">ស្វែងរកតាមច័ន្ទគតិ:</label>
+                            <select id="lunarFilter" onchange="filterResults()">
+                                <option value="">ជ្រើសរើសច័ន្ទគតិ</option>
+                                <option value="កើត">កើត</option>
+                                <option value="រោជ">រោជ</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <button onclick="showAll()" class="show-all-btn">បង្ហាញទាំងអស់</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-summary">
+                    <h3>សរុបលទ្ធផល: <span id="resultCount">-</span> ធាតុ</h3>
+                </div>
+
+                <!-- Time Tables -->
+                <div class="time-tables">
+                    <div class="time-table-container">
+                        <h3>ខែដែលសង់ផ្ទះបាន</h3>
+                        <table class="time-table">
+                            <thead>
+                                <tr>
+                                    <th>ខែ</th>
+                                    <th>ឈ្មោះខែ</th>
+                                    <th>តម្រា</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dayTimeTable">
+                                <tr data-hour="6">
+                                    <td>១</td>
+                                    <td>មិគសិរ</td>
+                                    <td>នឹងមានសេរីសួស្តី លាភសាការៈហូរចូល និងមានសេចក្តីសុខសាន្ត​ ត្រជាក់ត្រជុំ​</td>
+                                </tr>
+                                <tr data-hour="8">
+                                    <td>៤​</td>
+                                    <td>ផល្គុន</td>
+                                    <td>នឹងមានសេចក្តីសុខសាន្ត​ លាភសាការៈហូរចូលជារឿយៗ</td>
+                                </tr>
+                                <tr data-hour="9">
+                                    <td>៦</td>
+                                    <td>ពិសាខ</td>
+                                    <td>ល្អប្រសើរ​ និង​ មានលាភសាការៈគួជាទីពេញចិត្ត</td>
+                                </tr>
+                                <tr data-hour="10">
+                                    <td>៩</td>
+                                    <td>ស្រាពណ៍</td>
+                                    <td>ល្អណាស់​ និង​ មានលាភសាការៈគេនាំមកឱ្យ</td>
+                                </tr>
+                                <tr data-hour="12">
+                                   <td>១២</td>
+                                    <td>កត្តិក</td>
+                                    <td>ល្អប្រសើរ និង ត្រូវបានបុណ្តស័ក្តយស់ និង មាសប្រាក់បរិបូណ៌​ គួរជាទីពេញចិត្ត</td>
+                                </tr>                              
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="time-table-container">
+                        <h3>ថ្ងៃដែលសង់ផ្ទះបាន​​</h3>
+                        <table class="time-table">
+                            <thead>
+                                <tr>
+                                    <th>ថ្ងៃ</th>
+                                    <th>តម្រា</th>
+                                </tr>
+                            </thead>
+                            <tbody id="nightTimeTable">
+                                <tr data-hour="18">
+                                    <td>ថ្ងៃច័ន្ទ</td>
+                                    <td>ល្អប្រសើរណាស់ ព្រោះជាថ្ងៃដើមទ្រព្យ</td>
+                                </tr>
+                                <tr data-hour="20">
+                                    <td>ថ្ងៃពុធ:</td>
+                                    <td>ល្អណាស់​ និង​ មានលាភសាការៈគួជាទីពេញចិត្ត</td>
+                                </tr>
+                                <tr data-hour="21">
+                                    <td>ថ្ងៃព្រហស្បត្តិ៍:</td>
+                                    <td>ល្អណាស់ និងមានសេចក្តីសុខសាន្ត​ ត្រជាក់ត្រជុំ​ សម្បូរ សប្បាយ</td>
+                                </tr>
+                                <tr data-hour="22">
+                                    <td>ថ្ងៃសុក្រ:</td>
+                                    <td>ល្អប្រសើរ​ និង​ មានលាភសាការៈគួជាទីពេញចិត្ត</td>
+                                </tr>                               
+                            </tbody>
+                        </table>
+                    </div>
+                     <!-- Time Tables -->
+                <div class="time-tables">
+                    <div class="time-table-container">
+                        <h3>ថ្ងៃតាមច័ន្ទគតិ</h3>
+                        <table class="time-table">
+                            <thead>
+                                <tr>
+                                    <th>ថ្ងៃ</th>
+                                    <th>ច័ន្ទគតិ</th>
+                                    <th>តម្រា</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dayTimeTable">
+                                <!-- កើត -->
+                                <tr data-hour="6">
+                                    <td>១</td>
+                                    <td>កើត</td>
+                                    <td>ល្អអស្ចារ្យ (ចាប់ពីម៉ោង៦​ព្រឹក-៦ល្ងាច)​</td>
+                                </tr>
+                                <tr data-hour="8">
+                                    <td>៤​</td>
+                                    <td>កើត</td>
+                                    <td>ល្អ (កុំចេញទៅទីឆ្ងាយ ខាតលាភ)</td>
+                                </tr>
+                                <tr data-hour="9">
+                                    <td>៦</td>
+                                    <td>កើត</td>
+                                    <td>ល្អ (ពីព្រឹកដល់ថ្ងៃត្រង់)</td>
+                                </tr>
+                                <tr data-hour="10">
+                                    <td>៩</td>
+                                    <td>កើត</td>
+                                    <td>ល្អ (ពីព្រឹកដល់កណ្តាលអាធ្រាត្រ)</td>
+                                </tr>
+                                <tr data-hour="12">
+                                   <td>១១</td>
+                                    <td>កើត</td>
+                                    <td>ល្អ (ពីព្រឹកដល់សៀល)</td>
+                                </tr>  
+                                <tr data-hour="6">
+                                    <td>១៣</td>
+                                    <td>កើត</td>
+                                    <td>ល្អ (ពីព្រឹកដល់សៀល)​</td>
+                                </tr>
+                                <tr data-hour="8">
+                                    <td>១៥​</td>
+                                    <td>កើត</td>
+                                    <td>ល្ល្អ (ពីព្រឹកដល់ថ្ងៃត្រង់)</td>
+                                </tr>
+                                <!-- រោជ -->
+                                <tr data-hour="12">
+                                   <td>១</td>
+                                    <td>រោជ</td>
+                                    <td>ល្អ (ពីព្រឹកដល់សៀល)</td>
+                                </tr> 
+                                <tr data-hour="9">
+                                    <td>៤</td>
+                                    <td>រោជ</td>
+                                    <td>ល្អ (ពីព្រឹកដល់ថ្ងៃត្រង់)</td>
+                                </tr>
+                                <tr data-hour="10">
+                                    <td>៦</td>
+                                    <td>រោជ</td>
+                                    <td>ល្អ (ពីព្រឹកដល់ថ្ងៃត្រង់)</td>
+                                </tr>
+                                <tr data-hour="12">
+                                   <td>៩</td>
+                                    <td>រោជ</td>
+                                    <td>ល្អ (ពីព្រឹកដល់ថ្ងៃត្រង់)</td>
+                                </tr> 
+                                <tr data-hour="12">
+                                   <td>១១</td>
+                                    <td>រោជ</td>
+                                    <td>ល្អ (ពីព្រឹកដល់ថ្ងៃត្រង់)</td>
+                                </tr> 
+                                <tr data-hour="9">
+                                    <td>១៣</td>
+                                    <td>រោជ</td>
+                                    <td>ល្អ (ពីព្រឹកដល់ថ្ងៃត្រង់)</td>
+                                </tr>
+                                <tr data-hour="10">
+                                    <td>១៤</td>
+                                    <td>រោជ</td>
+                                    <td>ល្អ (ពីព្រឹកដល់ថ្ងៃត្រង់)</td>
+                                </tr>
+                                <tr data-hour="12">
+                                   <td>១៥</td>
+                                    <td>រោជ</td>
+                                    <td>ល្អ (ពីព្រឹកដល់ម៉ោង​៣រសៀល)</td>
+                                </tr>                             
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // House calculation data
+        const lookupTable = {
+            1: "មានទ្រព្យ",
+            2: "អន្តរាយ",
+            3: "ចោរលួច",
+            4: "មានជំងឺ",
+            5: "មានមិត្តភក្កិ",
+            6: "ព្រាត់ប្រាស់",  
+            7: "មានជំងឺ",
+            8: "មានលាភ"
+        };
+
+        // Navigation function
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update nav buttons
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+        }
+
+        // House calculation function
+        function calculate() {
+            const input = document.getElementById('measurement');
+            const value = parseFloat(input.value);
+            
+            if (isNaN(value) || value <= 0) {
+                alert('សូមបញ្ចូលតម្លៃត្រឹមត្រូវ');
+                return;
+            }
+
+            const divided = value / 5.375;
+            const integerPart = Math.floor(divided);
+            const modResult = integerPart % 8;
+            const finalResult = modResult + 1;
+
+            // Update result number
+            document.getElementById('resultNumber').textContent = finalResult;
+            
+            // Update result answer
+            const answerElement = document.getElementById('resultAnswer');
+            answerElement.textContent = lookupTable[finalResult];
+            
+            // Apply red color for negative results (2, 3, 4, 6, 7)
+            const negativeResults = [2, 3, 4, 6, 7];
+            if (negativeResults.includes(finalResult)) {
+                answerElement.style.color = '#e74c3c'; // Red color
+                answerElement.style.fontWeight = 'bold';
+            } else {
+                answerElement.style.color = '#27ae60'; // Green color for positive results
+                answerElement.style.fontWeight = 'bold';
+            }
+
+            highlightTableRow(finalResult);
+        }
+
+        function highlightTableRow(number) {
+            const rows = document.querySelectorAll('#house-calc tbody tr');
+            rows.forEach(row => {
+                row.classList.remove('highlighted');
+                row.classList.remove('negative-result');
+                row.classList.remove('positive-result');
+            });
+
+            const targetRow = document.querySelector(`#house-calc tbody tr[data-number="${number}"]`);
+            if (targetRow) {
+                targetRow.classList.add('highlighted');
+                
+                // Add color class based on result type
+                const negativeResults = [2, 3, 4, 6, 7];
+                if (negativeResults.includes(number)) {
+                    targetRow.classList.add('negative-result');
+                } else {
+                    targetRow.classList.add('positive-result');
+                }
+                
+                targetRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // Good time filter functions
+        function filterResults() {
+            const monthFilter = document.getElementById('monthFilter').value;
+            const dayFilter = document.getElementById('dayFilter').value;
+            const lunarFilter = document.getElementById('lunarFilter').value;
+            
+            // Get all table rows
+            const monthRows = document.querySelectorAll('#dayTimeTable tr');
+            const dayRows = document.querySelectorAll('#nightTimeTable tr');
+            const lunarRows = document.querySelectorAll('.time-tables .time-table-container:last-child tbody tr');
+            
+            let visibleCount = 0;
+            
+            // Filter month table
+            monthRows.forEach(row => {
+                const monthName = row.querySelector('td:nth-child(2)')?.textContent;
+                const shouldShow = !monthFilter || monthName === monthFilter;
+                
+                if (shouldShow) {
+                    row.style.display = '';
+                    row.classList.add('filtered-result');
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                    row.classList.remove('filtered-result');
+                }
+            });
+            
+            // Filter day table  
+            dayRows.forEach(row => {
+                const dayName = row.querySelector('td:first-child')?.textContent;
+                const shouldShow = !dayFilter || dayName.includes(dayFilter);
+                
+                if (shouldShow) {
+                    row.style.display = '';
+                    row.classList.add('filtered-result');
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                    row.classList.remove('filtered-result');
+                }
+            });
+            
+            // Filter lunar table
+            lunarRows.forEach(row => {
+                const lunarType = row.querySelector('td:nth-child(2)')?.textContent;
+                const shouldShow = !lunarFilter || lunarType === lunarFilter;
+                
+                if (shouldShow) {
+                    row.style.display = '';
+                    row.classList.add('filtered-result');
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                    row.classList.remove('filtered-result');
+                }
+            });
+            
+            // Update result count
+            document.getElementById('resultCount').textContent = visibleCount;
+        }
+        
+        function clearFilters() {
+            document.getElementById('monthFilter').value = '';
+            document.getElementById('dayFilter').value = '';
+            document.getElementById('lunarFilter').value = '';
+            showAll();
+        }
+        
+        function showAll() {
+            const allRows = document.querySelectorAll('#good-time tbody tr');
+            allRows.forEach(row => {
+                row.style.display = '';
+                row.classList.remove('filtered-result');
+            });
+            
+            // Count all visible rows
+            const visibleRows = document.querySelectorAll('#good-time tbody tr');
+            document.getElementById('resultCount').textContent = visibleRows.length;
+        }
+
+        function highlightTimeRow(timeKey) {
+            // This function is now used for the filter highlighting
+            const allRows = document.querySelectorAll('#good-time tbody tr');
+            allRows.forEach(row => row.classList.remove('highlighted'));
+
+            const filteredRows = document.querySelectorAll('#good-time tbody tr.filtered-result');
+            filteredRows.forEach(row => {
+                row.classList.add('highlighted');
+            });
+        }
+
+        // Initialize page
+        window.addEventListener('load', function() {
+            showAll(); // Show all results initially
+        });
+
+        // Enter key support for house calculation only
+        document.getElementById('measurement').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculate();
+            }
+        });
+    </script>
+</body>
+</html>
