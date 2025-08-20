@@ -222,8 +222,7 @@
                             </tbody>
                         </table>
                     </div>
-                     <!-- Time Tables -->
-                <div class="time-tables">
+
                     <div class="time-table-container">
                         <h3>ថ្ងៃតាមច័ន្ទគតិ</h3>
                         <table class="time-table">
@@ -234,7 +233,7 @@
                                     <th>តម្រា</th>
                                 </tr>
                             </thead>
-                            <tbody id="dayTimeTable">
+                            <tbody id="lunarTimeTable">
                                 <!-- កើត -->
                                 <tr data-hour="6">
                                     <td>១</td>
@@ -416,7 +415,7 @@
             // Get all table rows
             const monthRows = document.querySelectorAll('#dayTimeTable tr');
             const dayRows = document.querySelectorAll('#nightTimeTable tr');
-            const lunarRows = document.querySelectorAll('.time-tables .time-table-container:last-child tbody tr');
+            const lunarRows = document.querySelectorAll('#lunarTimeTable tr');
             
             let visibleCount = 0;
             
